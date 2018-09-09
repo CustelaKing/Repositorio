@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Grafo {
 	
 	private ArrayList<Vertice> listaVertices = new ArrayList<Vertice>();
-	private ArrayList<Aresta> arestas = new ArrayList<Aresta>();
+	private ArrayList<Aresta> listaArestas = new ArrayList<Aresta>();
 	
 	private Integer tipoGrafo;
 	private Boolean isValorado;
@@ -23,7 +23,7 @@ public class Grafo {
 			}	
 	}
 	
-	public void informaVertice() {
+	public void cadastraVertice() {
 	Boolean sair = false;	
 		
 		while(sair!=true){
@@ -39,19 +39,43 @@ public class Grafo {
 		}
 	}
 	
-	public void informaAresta() {
+	public void cadastraAresta() {
+		
 	Boolean sair = false;
-	
-		for(Vertice ver: listaVertices) {
+		
+		while(!sair){
 			
+			String verticesAresta = JOptionPane.showInputDialog("Informe o vértice de saída e o de chegada, respectivamente separados pela vírgula(,)");
+			
+			String[] vertice = verticesAresta.split(",");
+			
+			Vertice verticeSaida = new Vertice();
+			Vertice verticeChegada = new Vertice();
+			
+			for(Vertice vert : listaVertices) {
+				if(vert.getNome().equalsIgnoreCase(vertice[0])){
+					verticeSaida = vert;
+				}
+				if(vert.getNome().equalsIgnoreCase(vertice[1])){
+					verticeChegada =  vert;
+				}
+			}
+			
+			Aresta aresta = new Aresta();
+			aresta.setVerticeSaida(verticeSaida);
+			aresta.setVerticeChegada(verticeChegada);
+			
+			if(isValorado){
+				aresta.setValor(Double.parseDouble(JOptionPane.showInputDialog("Qual o valor da aresta?" )));
+			}
+			
+			listaArestas.add(aresta);
+			
+			if(Integer.parseInt(JOptionPane.showInputDialog("Deseja inserir mais Arestas? \n 1-SIM   2-NÃO"))==2)
+				sair=true;
 		}
 		
-		
 	}
-	
-	
-	
-	
 	
 	
 	public ArrayList<Vertice> getListaVertices() {
@@ -60,12 +84,15 @@ public class Grafo {
 	public void setListaVertices(ArrayList<Vertice> listaVertices) {
 		this.listaVertices = listaVertices;
 	}
-	public ArrayList<Aresta> getArestas() {
-		return arestas;
+	
+	public ArrayList<Aresta> getListaArestas() {
+		return listaArestas;
 	}
-	public void setArestas(ArrayList<Aresta> arestas) {
-		this.arestas = arestas;
+
+	public void setListaArestas(ArrayList<Aresta> listaArestas) {
+		this.listaArestas = listaArestas;
 	}
+
 	public Integer getTipoGrafo() {
 		return tipoGrafo;
 	}
